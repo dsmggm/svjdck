@@ -33,10 +33,7 @@ client_secret=*******     #填青龙对接应用的client_secret
 作者不对因使用该脚本造成的任何损失或法律问题负责。
 
 '''
-import asyncio  # 异步I/O操作库
-import random  #用于模拟延迟输入
-from re import T  # 随机数生成库
-import cv2  # OpenCV库，用于图像处理
+
 import os  #读取配置文件
 from pyppeteer import launch  # pyppeteer库，用于自动化控制浏览器
 import aiohttp   #用于请求青龙
@@ -45,6 +42,10 @@ from PIL import Image  #用于图像处理
 import platform  #判断系统类型
 import zipfile  #用于解压文件
 from datetime import datetime #获取时间
+import asyncio  # 异步I/O操作库
+import random  #用于模拟延迟输入
+from re import T  # 随机数生成库
+import cv2  # OpenCV库，用于图像处理
 
 
 
@@ -105,6 +106,7 @@ async def init_web_display():                           #初始化浏览器显�
         print("读取配置文件时出错")
 
 async def init_chrome():        #判断chrome是否存在，不存在则下载，仅针对windows
+    global chromium_path
     if platform.system() == 'Windows':
         chrome_dir = os.path.join(os.environ['USERPROFILE'], 'AppData', 'Local', 'pyppeteer', 'pyppeteer', 'local-chromium', '588429', 'chrome-win32')
         chrome_exe = os.path.join(chrome_dir, 'chrome.exe')
@@ -126,6 +128,8 @@ async def init_chrome():        #判断chrome是否存在，不存在则下载�
                 os.rename(source_item, destination_item)
             print('解压安装完成')
             await asyncio.sleep(1)  # 等待1秒，等待
+        user_dir = os.path.expanduser('~')        # 获取用户目录
+        chromium_path = os.path.join(user_dir, 'AppData', 'Local', 'pyppeteer', 'pyppeteer', 'local-chromium', '588429', 'chrome-win32', 'chrome.exe')        # 构建 Chromium 可执行文件路径
     elif platform.system() == 'Linux':
         chrome_path = os.path.expanduser("~/.local/share/pyppeteer/local-chromium/1181205/chrome-linux/chrome")
         download_path = os.path.expanduser("~/.local/share/pyppeteer/local-chromium/1181205/")
@@ -145,6 +149,7 @@ async def init_chrome():        #判断chrome是否存在，不存在则下载�
             print('删包')
             os.chmod(chrome_path, 0o755)
             print('解压安装完成')
+        chromium_path = os.path.join("~/.local/share/pyppeteer/local-chromium/1181205/chrome-linux/chrome")
     elif platform.system() == 'Darwin':
         return 'mac'
     else:
@@ -276,9 +281,11 @@ async def get_user_choice():            #短信验证选择
             print("发生错误：", e)
     return choice
 
+
 async def validate_logon(usernum, passwd, notes):                                         #登录操作
     print(f"正在登录 {notes} {usernum} 的账号")
     browser = await launch({
+        'executablePath': chromium_path,        #定义chromium路径
         'headless': WebDisplay,  # 设置为非无头模式，即可视化浏览器界面
         'args': asgs,
     })
@@ -360,9 +367,9 @@ async def SubmitCK(page, notes):  #提交ck
         elif cookie['name'] == 'pt_pin':                             #找到pt_pin的值
             pt_pin = cookie['value']                             #把值设置到变量pt_pin
     print('{} 登录成功 pt_key={};pt_pin={};'.format(notes, pt_key, pt_pin))    # 打印 pt_key 和 pt_pin 值
-    with open('jdck.log', 'a+', encoding='utf-8') as file:    #打开文件
-        content = '{}   {}   pt_key={};pt_pin={};\n'.format(datetime.now().strftime('%Y-%m-%d %H:%M:%S'), notes, pt_key, pt_pin)   # 构造要写入文件的字符串
-        file.write(content)  # 写入文件
+    #with open('jdck.log', 'a+', encoding='utf-8') as file:    #打开文件
+        #content = '{}   {}   pt_key={};pt_pin={};\n'.format(datetime.now().strftime('%Y-%m-%d %H:%M:%S'), notes, pt_key, pt_pin)   # 构造要写入文件的字符串
+        #file.write(content)  # 写入文件
     found_ddhhs = False                             #初始化循环变量，用于后面找不到变量的解决方式
     for env in envs:
         if notes in env["remarks"]:      #在所有变量值中找remarks，找到执行下面的更新ck
@@ -526,7 +533,7 @@ async def main():  # 打开并读取配置文件，主程序
     await print_message('注：账户密码已从青龙变量迁移到jdck.ini文件中，在配置文件中进行账密设置')
     await print_message('脚本需要青龙应用权限——环境变量跟脚本管理')
     await print_message('项目地址：https://github.com/dsmggm/svjdck')
-    await print_message('当前版本：jdck20240405')
+    await print_message('当前版本：jdck20240408')
     await get_latest_version()       #获取最新版本
     await ifconfigfile()    #检测配置文件并初始化
     await init_chrome()     #检测初始化chrome
