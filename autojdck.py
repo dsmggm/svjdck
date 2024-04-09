@@ -535,7 +535,7 @@ async def main():  # 打开并读取配置文件，主程序
     await print_message('注：账户密码已从青龙变量迁移到jdck.ini文件中，在配置文件中进行账密设置')
     await print_message('脚本需要青龙应用权限——环境变量跟脚本管理')
     await print_message('项目地址：https://github.com/dsmggm/svjdck')
-    await print_message('当前版本：jdck20240409')
+    await print_message('当前版本：jdck20240410')
     await get_latest_version()       #获取最新版本
     await ifconfigfile()    #检测配置文件并初始化
     chromium_path = await init_chrome()     #检测初始化chrome
