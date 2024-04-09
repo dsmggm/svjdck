@@ -106,7 +106,6 @@ async def init_web_display():                           #初始化浏览器显�
         print("读取配置文件时出错")
 
 async def init_chrome():        #判断chrome是否存在，不存在则下载，仅针对windows
-    global chromium_path
     if platform.system() == 'Windows':
         chrome_dir = os.path.join(os.environ['USERPROFILE'], 'AppData', 'Local', 'pyppeteer', 'pyppeteer', 'local-chromium', '588429', 'chrome-win32')
         chrome_exe = os.path.join(chrome_dir, 'chrome.exe')
@@ -128,8 +127,8 @@ async def init_chrome():        #判断chrome是否存在，不存在则下载�
                 os.rename(source_item, destination_item)
             print('解压安装完成')
             await asyncio.sleep(1)  # 等待1秒，等待
-        user_dir = os.path.expanduser('~')        # 获取用户目录
-        chromium_path = os.path.join(user_dir, 'AppData', 'Local', 'pyppeteer', 'pyppeteer', 'local-chromium', '588429', 'chrome-win32', 'chrome.exe')        # 构建 Chromium 可执行文件路径
+        chromium_path = os.path.join(os.environ['USERPROFILE'], 'AppData', 'Local', 'pyppeteer', 'pyppeteer', 'local-chromium', '588429', 'chrome-win32', 'chrome.exe') #定义chrome路径
+        return chromium_path
     elif platform.system() == 'Linux':
         chrome_path = os.path.expanduser("~/.local/share/pyppeteer/local-chromium/1181205/chrome-linux/chrome")
         download_path = os.path.expanduser("~/.local/share/pyppeteer/local-chromium/1181205/")
@@ -149,7 +148,11 @@ async def init_chrome():        #判断chrome是否存在，不存在则下载�
             print('删包')
             os.chmod(chrome_path, 0o755)
             print('解压安装完成')
-        chromium_path = os.path.join("~/.local/share/pyppeteer/local-chromium/1181205/chrome-linux/chrome")
+        chromium_path = os.path.join(
+        os.path.expanduser('~'),
+        '.local/share/pyppeteer/local-chromium/1181205/chrome-linux/chrome'
+        )
+        return chromium_path
     elif platform.system() == 'Darwin':
         return 'mac'
     else:
@@ -246,7 +249,7 @@ notify.sendNotify(`JDCK登录验证通知`, message)
 
 
 
-async def logon_main():             #读取配置文件账户密码，登录
+async def logon_main(chromium_path):             #读取配置文件账户密码，登录
     global qltoken   #初始化青龙获取青龙ck
     qltoken = await initql()      #初始化青龙token
     global envs               #青龙环境全局变量
@@ -261,7 +264,7 @@ async def logon_main():             #读取配置文件账户密码，登录
             if len(userdata) == 3:   #分为三段，如果不满足3段，则跳过此行
                 usernum, passwd, notes= userdata     # 解包列表到四个变量，并按照指定格式打印
                 if notes not in notess:        # 判断是否不存在 "notes" 在 notess 中
-                    await validate_logon(usernum, passwd, notes)   #登录
+                    await validate_logon(usernum, passwd, notes, chromium_path)   #登录
 
 async def get_user_choice():            #短信验证选择
     choice = None
@@ -282,7 +285,7 @@ async def get_user_choice():            #短信验证选择
     return choice
 
 
-async def validate_logon(usernum, passwd, notes):                                         #登录操作
+async def validate_logon(usernum, passwd, notes, chromium_path):                                         #登录操作
     print(f"正在登录 {notes} {usernum} 的账号")
     browser = await launch({
         'executablePath': chromium_path,        #定义chromium路径
@@ -533,11 +536,11 @@ async def main():  # 打开并读取配置文件，主程序
     await print_message('注：账户密码已从青龙变量迁移到jdck.ini文件中，在配置文件中进行账密设置')
     await print_message('脚本需要青龙应用权限——环境变量跟脚本管理')
     await print_message('项目地址：https://github.com/dsmggm/svjdck')
-    await print_message('当前版本：jdck20240408')
+    await print_message('当前版本：jdck20240409')
     await get_latest_version()       #获取最新版本
     await ifconfigfile()    #检测配置文件并初始化
-    await init_chrome()     #检测初始化chrome
-    await logon_main()    #登录操作，写入ck到文件
+    chromium_path = await init_chrome()     #检测初始化chrome
+    await logon_main(chromium_path)    #登录操作，写入ck到文件
     os.remove('image.png') if os.path.exists('image.png') else None     #删除缓存照片
     os.remove('template.png') if os.path.exists('template.png') else None     #删除缓存照片
     await print_message('完成全部登录')
