@@ -41,7 +41,7 @@ from urllib import request  # 用于网络请求，这里主要用来下载图�
 from PIL import Image  #用于图像处理
 import platform  #判断系统类型
 import zipfile  #用于解压文件
-from datetime import datetime #获取时间
+#from datetime import datetime #获取时间
 import asyncio  # 异步I/O操作库
 import random  #用于模拟延迟输入
 from re import T  # 随机数生成库
@@ -111,7 +111,7 @@ async def init_chrome():        #判断chrome是否存在，不存在则下载�
         chrome_exe = os.path.join(chrome_dir, 'chrome.exe')
         chmod_dir = os.path.join(os.environ['USERPROFILE'], 'AppData', 'Local', 'pyppeteer', 'pyppeteer', 'local-chromium', '588429', 'chrome-win32', 'chrome-win32')
         if os.path.exists(chrome_exe):
-            return
+            return chrome_exe
         else:
             print('貌似第一次使用，未找到chrome，正在下载chrome浏览器....')
 
@@ -127,13 +127,13 @@ async def init_chrome():        #判断chrome是否存在，不存在则下载�
                 os.rename(source_item, destination_item)
             print('解压安装完成')
             await asyncio.sleep(1)  # 等待1秒，等待
-        chromium_path = os.path.join(os.environ['USERPROFILE'], 'AppData', 'Local', 'pyppeteer', 'pyppeteer', 'local-chromium', '588429', 'chrome-win32', 'chrome.exe') #定义chrome路径
-        return chromium_path
+            return chrome_exe
+
     elif platform.system() == 'Linux':
         chrome_path = os.path.expanduser("~/.local/share/pyppeteer/local-chromium/1181205/chrome-linux/chrome")
         download_path = os.path.expanduser("~/.local/share/pyppeteer/local-chromium/1181205/")
         if os.path.isfile(chrome_path):
-            pass
+            return chrome_path
         else:
             print('貌似第一次使用，未找到chrome，正在下载chrome浏览器....')
             print('文件位于github，请耐心等待，如遇到网络问题可到项目地址手动下载')
@@ -145,14 +145,8 @@ async def init_chrome():        #判断chrome是否存在，不存在则下载�
             with zipfile.ZipFile(target_file, 'r') as zip_ref:
                 zip_ref.extractall(download_path)
             os.remove(target_file)
-            print('删包')
             os.chmod(chrome_path, 0o755)
-            print('解压安装完成')
-        chromium_path = os.path.join(
-        os.path.expanduser('~'),
-        '.local/share/pyppeteer/local-chromium/1181205/chrome-linux/chrome'
-        )
-        return chromium_path
+            return chrome_path
     elif platform.system() == 'Darwin':
         return 'mac'
     else:
@@ -207,8 +201,6 @@ async def qlenvs():   #获取青龙全部jdck变量
                     jd_cookie_data = [env for env in rjson['data'] if env.get('name') == 'JD_COOKIE']            #获取全部jd的变量
                     global notess      #把备注设置为全部变量
                     notess = [env['remarks'] for env in rjson['data'] if env.get('name') == 'JD_COOKIE' and env.get('status') == 0]             #找到所有name为JD_COOKIE，status为0的字典列表，然后把remarks的值放进notess
-                    #global jdckpasswd      #把账号密码变量设为全局变量
-                    #jdckpasswd = next((env['value'].strip().split('\n') for env in rjson['data'] if env.get('name') == 'jdckpasswd'), None)      #获取账号密码变量
                     global proxy_server      #把代理变量设为全局变量
                     proxy_server = next((env['value'].strip().split('\n') for env in rjson['data'] if env.get('name') == 'AutoJDCK_DP'), None)      #获取代理变量
                     return jd_cookie_data
@@ -223,7 +215,7 @@ async def push_message(qltoken, notes):
     js_file = 'JdckNotify.js'
     push_data = """
 const notify = require('./sendNotify')
-const message = ["{} 账号需要验证登录"];
+const message = "{} 账号需要验证登录";
 notify.sendNotify(`JDCK登录验证通知`, message)
 """.format(notes)       #脚本内容，{}是notes变量内容
     data = {
@@ -316,7 +308,7 @@ async def validate_logon(usernum, passwd, notes, chromium_path):                
                         choice = await get_user_choice()            #调用选择函数
                         if choice == '1':
                             print("正在发送短信验证")
-                            await duanxin(page)    #调用短信登录函数
+                            await duanxin(page, usernum, passwd)    #调用短信登录函数
                             break
                         elif choice == '2':
                             await browser.close()  #关闭浏览器
@@ -434,7 +426,7 @@ async def get_verification_code():  # 交互输入验证码
         else:
             print("请输入6位数字作为验证码，请重新输入。")
     return code
-async def duanxin(page):   #短信验证函数
+async def duanxin(page,usernum, passwd):   #短信验证函数
         await page.waitForXPath('//*[@id="app"]/div/div[2]/div[2]/span/a')   #等手机短信认证元素  //*[@id="app"]/div/div[2]
         await page.waitFor(random.randint(1, 3) * 1000)      #随机等待1-3秒
         elements = await page.xpath('//*[@id="app"]/div/div[2]/div[2]/span/a')  # 选择元素
@@ -450,17 +442,24 @@ async def duanxin(page):   #短信验证函数
         except Exception as e:
             pass
         try:
-            await page.waitForXPath('//*[@id="app"]/div/div[2]/div[2]/div/input')   # 等待输入框元素出现
-            code = await get_verification_code()   #交互输入验证码
-            input_elements = await page.xpath('//*[@id="app"]/div/div[2]/div[2]/div/input')    # 选择输入框元素
-            await input_elements[0].type(code)       # 输入验证码
-            await page.waitForXPath('//*[@id="app"]/div/div[2]/a[1]')   #等登录按钮元素
-            await page.waitFor(random.randint(1, 3) * 1000)      #随机等待1-3秒
-            elements = await page.xpath('//*[@id="app"]/div/div[2]/a[1]')  # 选择元素
-            await elements[0].click()  # 点击元素
-            await page.waitFor(random.randint(2, 3) * 1000)      #随机等待2-3秒
+            if await page.xpath('//*[@id="captcha_modal"]/div/div[3]/button'):             #点击图片验证，无法过    
+                await page.waitFor(5000)  # 等待3秒
+                print("验证出错，正在重试……")
+                await page.reload()                  #刷新浏览器
+                await typeuser(page, usernum, passwd)        #进行账号密码登录
         except Exception as e:
-            pass
+            try:
+                await page.waitForXPath('//*[@id="app"]/div/div[2]/div[2]/div/input')   # 等待输入框元素出现
+                code = await get_verification_code()   #交互输入验证码
+                input_elements = await page.xpath('//*[@id="app"]/div/div[2]/div[2]/div/input')    # 选择输入框元素
+                await input_elements[0].type(code)       # 输入验证码
+                await page.waitForXPath('//*[@id="app"]/div/div[2]/a[1]')   #等登录按钮元素
+                await page.waitFor(random.randint(1, 3) * 1000)      #随机等待1-3秒
+                elements = await page.xpath('//*[@id="app"]/div/div[2]/a[1]')  # 选择元素
+                await elements[0].click()  # 点击元素
+                await page.waitFor(random.randint(2, 3) * 1000)      #随机等待2-3秒
+            except Exception as e:
+                pass
 
 async def verification(page):            #过滑块
     await page.waitForSelector('#cpc_img')
