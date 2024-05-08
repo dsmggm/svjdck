@@ -211,29 +211,29 @@ async def qlenvs():   #获取青龙全部jdck变量
 
 
 
-async def push_message(qltoken, notes):
+async def push_message(qltoken, text):
     js_file = 'JdckNotify.js'
     push_data = """
 const notify = require('./sendNotify')
-const message = "{} 账号需要验证登录";
-notify.sendNotify(`JDCK登录验证通知`, message)
-""".format(notes)       #脚本内容，{}是notes变量内容
+const message = "{}";
+notify.sendNotify(`JDCK自动登录失败通知`, message)
+""".format(text)       # 脚本内容，{}是text变量内容，也就是通知内容
     data = {
         "filename": js_file,
         "path": "./",
-        "content": push_data    #脚本内容，如上push_data
+        "content": push_data    # 脚本内容，如上push_data
     }
-    async with aiohttp.ClientSession() as session:                             #推送运行脚本
+    async with aiohttp.ClientSession() as session:                             # 推送运行脚本
         url = f"{qlip}/open/scripts/run"
         try:
-            async with session.put(url, headers={'Authorization': 'Bearer ' + qltoken}, json=data) as response:            #更新变量的api
+            async with session.put(url, headers={'Authorization': 'Bearer ' + qltoken}, json=data) as response:            # 更新变量的api
                 rjson = await response.json()
                 if rjson['code'] == 200:
                     print('推送验证通知')
                 else:
                     print('推送验证通知失败,请检查青龙应用《脚本管理》权限')
         except Exception as e:
-            print('推送验证通知失败,请检查青龙连接状态和应用《脚本管理》权限', e)
+            print('推送验证通知失败,请检查青龙连接状态和应用设置《脚本管理》权限')
 
 
 
@@ -302,7 +302,8 @@ async def validate_logon(usernum, passwd, notes, chromium_path):                
 
         try:                              #检查是不是要短信验证
             if await page.J('.sub-title'):       #<p data-v-4c407d20="" class="sub-title">选择认证方式</p>
-                await push_message(qltoken, notes)          #推送需要验证登陆通知
+                text = f"{notes} {usernum} 需要短信验证"
+                await push_message(qltoken, text)          #推送需要验证登陆通知
                 while True:
                     try:
                         choice = await get_user_choice()            #调用选择函数
@@ -329,7 +330,27 @@ async def validate_logon(usernum, passwd, notes, chromium_path):                
                 await verification(page)  #过滑块
         except Exception as e:
             pass
-
+        
+        try:
+            element = await page.xpath('//*[@id="app"]/div/div[5]')
+            if element:
+                for el in element:
+                    text_content = await page.evaluate('(el) => el.textContent', el)
+                    if "您的账号存在风险，为了您的账号安全请到京东商城App登录" in text_content:
+                        print("账号存在风险，请到京东App登录，正在推送通知")
+                        text = f"{notes} {usernum} 存在风险，请到京东App登录"
+                        await push_message(qltoken, text)          #推送需要验证登陆通知
+                        should_break = True  
+                        break
+                    elif "账号或密码不正确" in text_content:
+                        print("账号或密码不正确,正在推送通知")
+                        text = f"{notes} {usernum} 账号或密码不正确" 
+                        await push_message(qltoken, text)
+                        should_break = True  
+                        break
+        except Exception as e:
+            pass
+        
         try:
             if await page.xpath('//*[@id="captcha_modal"]/div/div[3]/button'):             #点击图片验证，无法过    
                 await page.waitFor(3000)  # 等待3秒
@@ -435,31 +456,27 @@ async def duanxin(page,usernum, passwd):   #短信验证函数
         await page.waitFor(random.randint(1, 3) * 1000)      #随机等待1-3秒
         elements = await page.xpath('//*[@id="app"]/div/div[2]/div[2]/button')  # 选择元素
         await elements[0].click()  # 点击元素
-        await page.waitFor(3000)  # 等待3秒，等待是否要滑块
+        await page.waitFor(5000)  # 等待3秒，等待是否要滑块
         try:                              #检测是否要过滑块
             if await page.xpath('//*[@id="captcha_modal"]/div/div[3]/div'):
                 await verification(page)  #过滑块
-        except Exception as e:
-            pass
-        try:
             if await page.xpath('//*[@id="captcha_modal"]/div/div[3]/button'):             #点击图片验证，无法过    
                 await page.waitFor(5000)  # 等待3秒
                 print("验证出错，正在重试……")
                 await page.reload()                  #刷新浏览器
                 await typeuser(page, usernum, passwd)        #进行账号密码登录
         except Exception as e:
-            try:
-                await page.waitForXPath('//*[@id="app"]/div/div[2]/div[2]/div/input')   # 等待输入框元素出现
-                code = await get_verification_code()   #交互输入验证码
-                input_elements = await page.xpath('//*[@id="app"]/div/div[2]/div[2]/div/input')    # 选择输入框元素
-                await input_elements[0].type(code)       # 输入验证码
-                await page.waitForXPath('//*[@id="app"]/div/div[2]/a[1]')   #等登录按钮元素
-                await page.waitFor(random.randint(1, 3) * 1000)      #随机等待1-3秒
-                elements = await page.xpath('//*[@id="app"]/div/div[2]/a[1]')  # 选择元素
-                await elements[0].click()  # 点击元素
-                await page.waitFor(random.randint(2, 3) * 1000)      #随机等待2-3秒
-            except Exception as e:
-                pass
+            pass
+        await page.waitForXPath('//*[@id="app"]/div/div[2]/div[2]/div/input')   # 等待输入框元素出现
+        code = await get_verification_code()   #交互输入验证码
+        input_elements = await page.xpath('//*[@id="app"]/div/div[2]/div[2]/div/input')    # 选择输入框元素
+        await input_elements[0].type(code)       # 输入验证码
+        await page.waitForXPath('//*[@id="app"]/div/div[2]/a[1]')   #等登录按钮元素
+        await page.waitFor(random.randint(1, 3) * 1000)      #随机等待1-3秒
+        elements = await page.xpath('//*[@id="app"]/div/div[2]/a[1]')  # 选择元素
+        await elements[0].click()  # 点击元素
+        await page.waitFor(random.randint(2, 3) * 1000)      #随机等待2-3秒
+
 
 async def verification(page):            #过滑块
     await page.waitForSelector('#cpc_img')
@@ -535,7 +552,7 @@ async def main():  # 打开并读取配置文件，主程序
     await print_message('注：账户密码已从青龙变量迁移到jdck.ini文件中，在配置文件中进行账密设置')
     await print_message('脚本需要青龙应用权限——环境变量跟脚本管理')
     await print_message('项目地址：https://github.com/dsmggm/svjdck')
-    await print_message('当前版本：jdck20240410')
+    await print_message('当前版本：jdck20240418')
     await get_latest_version()       #获取最新版本
     await ifconfigfile()    #检测配置文件并初始化
     chromium_path = await init_chrome()     #检测初始化chrome
@@ -546,4 +563,3 @@ async def main():  # 打开并读取配置文件，主程序
     await asyncio.sleep(10)  # 等待10秒，等待
 
 asyncio.get_event_loop().run_until_complete(main())  #使用异步I/O循环运行main()函数，启动整个自动登录和滑块验证流程。
-
