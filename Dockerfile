@@ -9,16 +9,16 @@ FROM python:3.12.5-slim-bullseye
 WORKDIR /jdck
 
 # 修改软件源码
-RUN cat <<EOF > /etc/apt/sources.list 
-deb http://mirrors.huaweicloud.com/debian/ bookworm main non-free non-free-firmware contrib
-deb-src http://mirrors.huaweicloud.com/debian/ bookworm main non-free non-free-firmware contrib
-deb http://mirrors.huaweicloud.com/debian-security/ bookworm-security main
-deb-src http://mirrors.huaweicloud.com/debian-security/ bookworm-security main
-deb http://mirrors.huaweicloud.com/debian/ bookworm-updates main non-free non-free-firmware contrib
-deb-src http://mirrors.huaweicloud.com/debian/ bookworm-updates main non-free non-free-firmware contrib
-deb http://mirrors.huaweicloud.com/debian/ bookworm-backports main non-free non-free-firmware contrib
-deb-src http://mirrors.huaweicloud.com/debian/ bookworm-backports main non-free non-free-firmware contrib
-EOF
+
+RUN echo "deb http://mirrors.huaweicloud.com/debian/ bookworm main non-free non-free-firmware contrib" > /etc/apt/sources.list && \
+echo "deb-src http://mirrors.huaweicloud.com/debian/ bookworm main non-free non-free-firmware contrib" > /etc/apt/sources.list && \
+echo "deb http://mirrors.huaweicloud.com/debian-security/ bookworm-security main" > /etc/apt/sources.list && \
+echo "deb-src http://mirrors.huaweicloud.com/debian-security/ bookworm-security main" > /etc/apt/sources.list && \
+echo "deb http://mirrors.huaweicloud.com/debian/ bookworm-updates main non-free non-free-firmware contrib" > /etc/apt/sources.list && \
+echo "deb-src http://mirrors.huaweicloud.com/debian/ bookworm-updates main non-free non-free-firmware contrib" > /etc/apt/sources.list && \
+echo "deb http://mirrors.huaweicloud.com/debian/ bookworm-backports main non-free non-free-firmware contrib" > /etc/apt/sources.list && \
+echo "deb-src http://mirrors.huaweicloud.com/debian/ bookworm-backports main non-free non-free-firmware contrib" > /etc/apt/sources.list
+
 RUN apt update
 
 # 设置pip的镜像源
@@ -65,7 +65,7 @@ RUN apt install -y \
   libasound2
 
 
-# RUN apt install -y git && git clone https://github.com/dsmggm/svjdck.git /jdck
+RUN apt install -y git && git clone https://github.com/dsmggm/svjdck.git /jdck
 
 #挂载点
 VOLUME /jdck/data
@@ -75,12 +75,12 @@ VOLUME /jdck/data
 # COPY ./main.py /jdck/main.py
 # COPY ./start_app.py /jdck/start_app.py
 # COPY ./start_init.py /jdck/start_init.py
-COPY ./static/ /jdck/static/
-COPY ./templates/ /jdck/templates/
+# COPY ./static/ /jdck/static/
+# COPY ./templates/ /jdck/templates/
 
-COPY ./*.py /jdck/
+# COPY ./*.py /jdck/
 
-COPY ./start.sh /jdck/
+# COPY ./start.sh /jdck/
 
 # 监听端口
 EXPOSE 4321
@@ -89,7 +89,7 @@ EXPOSE 4321
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 RUN echo "Asia/Shanghai" > /etc/timezone
 
-RUN chmod +x /jdck/*.py
+# RUN chmod +x /jdck/*.py
 RUN chmod +x /jdck/*.sh
 
 # 容器健康监测
