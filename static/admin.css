@@ -1,0 +1,110 @@
+/* 标题 */
+.title_a {
+    display: flex;
+    justify-content: center;
+    margin: 10 auto; /* 水平居中 */
+    color: #8462ff;
+}
+
+/* admin登录框 */
+.admin_login_form {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto; /* 水平居中 */
+    display: flex;
+    flex-direction: column; /* 子元素垂直排列 */
+    place-items: center; /* 子元素垂直居中 */
+    justify-content: space-between; /* 子元素之间均匀分布 */
+    padding: 8px 0; /* 上下内边距，确保子元素有上下间隔 */
+    margin-top: 234px;
+}
+
+/* 内容输入框 */
+.info_div {
+    border: none; /* 去除边框 */
+    border-radius: 5px; /* 设置圆角为5px */
+    height: 35px; /* 设置高度为35px */
+    width: 80%; /* 宽度占父元素的80% */
+    margin: 0 auto; /* 水平居中 */
+    display: flex; /* 使用弹性盒模型布局 */
+    background-color: transparent; /* 背景透明 */
+    padding: 10px 0; /* 上下内边距，确保子元素有上下间隔 */
+}
+
+/* 用户信息标题 */
+.info_title {
+    width: auto; /* 宽度占满100% */
+    height: auto; /* 高度根据内容自适应 */
+    min-width: 3rem;
+    margin: 0; /* 去除默认的边距 */
+    display: flex; /* 使用弹性盒布局，便于排列子元素 */
+    background-color: transparent; /* 背景透明 */
+    border: 1px solid transparent; /* 设置透明边框以避免元素闪烁 */
+    outline: none; /* 去除聚焦时的轮廓线 */
+    border-radius: 5px; /* 圆角设置为5px，增强视觉效果 */
+    align-items: center; /* 子元素在交叉轴（垂直方向）上居中对齐 */
+    justify-content: flex-start; /* 子元素在主轴（水平方向）上靠左对齐 */
+    color: #8462ff; /* 文本颜色设置为指定的颜色 */
+}
+
+
+/* 输入框 */
+.input_text {
+    width: 100%; /* 宽度占满100% */
+    height: 100%; /* 高度占满100% */
+    min-width: 200px; /* 最小宽度为200px */
+    margin: 0 auto; /* 水平居中对齐 */
+    display: flex; /* 使用弹性盒模型布局 */
+    background-color: transparent; /* 背景透明 */
+    border: 1px solid transparent; /* 设置透明边框以避免跳动 */
+    outline: none; /* 去除聚焦时的轮廓线 */
+    border: 1px solid #8462ff; /* 描边1px，使用指定颜色 */
+    border-radius: 5px; /* 圆角设置为5px */
+    margin-right: auto; /* 右侧边距自动，通常用于弹性布局中的对齐 */
+}
+
+
+/* 登录按钮 */
+.login_button {
+    height: 35px; 
+    width: 100%;
+    border-radius: 5px; /* 圆角5px */
+    display: flex;
+    font-size: 16px;
+    margin: 0 auto; /* 水平居中 */
+    justify-content: center;
+    align-items: center;
+    background-color: #dad0ff;
+    color: #8462ff;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 18px;
+}
+.login_button:hover {
+    background-color: #8462ff;
+    color: #dad0ff;
+}
+
+
+
+
+
+/* 重置 body 的默认边距 */
+body {
+    margin: 0; /* 去掉 body 的默认边距 */
+    padding: 0; /* 去掉 body 的默认内边距 */
+}
+
+/* 页脚 */
+footer {
+    position: fixed; /* 固定footer在视窗底部 */
+    bottom: 0; /* 将footer放置在视窗底部 */
+    width: 100%; /* 使footer宽度与视窗宽度相同 */
+    text-align: center; /* 文本居中 */
+    padding: 1px 0; /* 上下内边距 */
+    background-color: #f8f9fa; /* 背景颜色 */
+    border-top: 1px solid #e9ecef; /* 上边框 */
+    font-size: 0.875em; /* 字体大小 */
+}
+
+
