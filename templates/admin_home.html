@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AUTOJDCK2管理后台</title>
+    <link rel="icon" type="image/x-icon" href="./static/favicon.ico" />
+    <link rel="stylesheet" href="./static/admin.css"/>
+    <script src="static/admin.js"></script>
+</head>
+<body>
+    <h1 class="title_a">AUTOJDCK2管理后台</h1>
+    <!-- 管理界面 -->
+    <div class="manage_web" id="manage_web">
+      <nav>
+        <a href="/admin/set">参数设置</a>
+        <a href="/admin/users">账号管理</a>
+      </nav>
+      <hr>      <!-- 水平线 -->
+      <div>
+          {% block content %}{% endblock %}
+      </div>
+    </div>
+  <footer>
+    <p>&copy;2024 AUTOJDCK2  github.com/dsmggm/svjdck/</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AUTOJDCK2管理后台</title>
+    <link rel="icon" type="image/x-icon" href="./static/favicon.ico" />
+    <link rel="stylesheet" href="./static/admin_set.css"/>
+    <script src="static/admin_set.js"></script>
+</head>
+<body>
+    <h1 class="title_a">AUTOJDCK2管理后台</h1>
+    <!-- 管理界面 -->
+    <div class="manage_web" id="manage_web">
+        <nav class="container">
+          <a class="child" href="/admin_set">参数设置</a>
+          <a class="child" href="/admin_users">账号管理</a>
+        </nav>
+    <div>
+    <!-- 参数页面 -->
+    <div class="set_form">
+        <div class="set_box">
+            <!-- 标题 -->
+            <div class="set_title">参数设置</div>
+            <hr class="hr_element">
+            <!-- 定时 -->
+            <div class="set_cron">
+                <div>
+                    <div class="set_value_element">定时登陆设置</div>
+                    <div>
+                        <input class="input_element" id="crontab_time" type="text">
+                        <div class="remarks">说明：使用cron定时规则，例如：*/30 * * * *</div>
+                    </div> 
+                    <hr class="hr_element">
+                </div>
+            </div>
+            <!-- apptoken -->
+            <div class="set_apptoken">
+                <div>
+                    <div class="set_value_element">apptoken</div>
+                    <div>
+                        <input class="input_element" id="apptoken" type="text">
+                        <div class="remarks">说明：WxPusher推送平台apptoken</div>
+                    </div> 
+                    <hr class="hr_element">
+                </div>
+            </div>
+            <!-- 公告内容 -->
+            <div class="set_gg">
+                <div>
+                    <div class="set_value_element">公告内容</div>
+                    <div>
+                        <textarea class="big_input_element" id="gg"></textarea>
+                        <div class="remarks">说明：登陆页面公告内容(内容为html格式)</div>
+                    </div> 
+                    <hr class="hr_element">
+                </div>
+            </div>
+            <!-- 保存按钮 -->
+            <button class="savesettings" id="savesettings" onclick="savesettings()">保存</button>
+            <div class="version_date">
+                <div>
+                    <div id="ver">当前版本：</div>
+                </div>
+                <div>
+                    <div id="auth_date">授权到期日期：</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+  <footer>
+    <p>&copy;2024 AUTOJDCK2  github.com/dsmggm/svjdck/</p>
+  </footer>
+</body>
+</html>
