@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AUTOJDCK2管理后台</title>
+    <link rel="icon" type="image/x-icon" href="./static/favicon.ico" />
+    <link rel="stylesheet" href="./static/admin.css"/>
+    <script src="static/admin.js"></script>
+</head>
+<body>
+    <h1 class="title_a">AUTOJDCK2管理后台</h1>
+    <!-- 登陆界面 -->
+    <div class="admin_login_form" id="admin_login_form">
+      <!-- 账号 -->
+      <div class="info_div">
+        <label class="info_title">账号：</label>
+        <input class="input_text" id="adminname" type="text" placeholder="请输入后台账号">
+      </div>
+      <!-- 密码 -->
+      <div class="info_div">
+        <label class="info_title">密码：</label>
+        <input class="input_text" id="adminpasswd" type="password" placeholder="请输入后台密码">
+      </div>
+      <!-- 登录按钮 -->
+      <div class="info_div">
+       <button class="login_button" id="login_button" onclick="admin_login()">登录</button>
+      </div>
+    </div>
+  <footer>
+    <p>&copy;2024 AUTOJDCK2  github.com/dsmggm/svjdck/</p>
+  </footer>
+</body>
+</html>
