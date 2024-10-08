@@ -1,28 +1,22 @@
 # 基本镜像
-# FROM alpine:latest
-FROM python:3.12.5-slim-bullseye
-# python:3.12.5-slim-bullseye
-# python3.12.5-精简-debian 11
-# 失败就试试3.13或者3.12
-
+FROM python:3.11-slim-bullseye
 # 设置工作目录
 WORKDIR /jdck
 
 # 修改软件源码
-
-RUN echo "deb http://mirrors.huaweicloud.com/debian/ bookworm main non-free non-free-firmware contrib" > /etc/apt/sources.list && \
-echo "deb-src http://mirrors.huaweicloud.com/debian/ bookworm main non-free non-free-firmware contrib" > /etc/apt/sources.list && \
-echo "deb http://mirrors.huaweicloud.com/debian-security/ bookworm-security main" > /etc/apt/sources.list && \
-echo "deb-src http://mirrors.huaweicloud.com/debian-security/ bookworm-security main" > /etc/apt/sources.list && \
-echo "deb http://mirrors.huaweicloud.com/debian/ bookworm-updates main non-free non-free-firmware contrib" > /etc/apt/sources.list && \
-echo "deb-src http://mirrors.huaweicloud.com/debian/ bookworm-updates main non-free non-free-firmware contrib" > /etc/apt/sources.list && \
-echo "deb http://mirrors.huaweicloud.com/debian/ bookworm-backports main non-free non-free-firmware contrib" > /etc/apt/sources.list && \
-echo "deb-src http://mirrors.huaweicloud.com/debian/ bookworm-backports main non-free non-free-firmware contrib" > /etc/apt/sources.list
+# RUN echo "deb http://mirrors.huaweicloud.com/debian/ bookworm main non-free non-free-firmware contrib" > /etc/apt/sources.list && \
+# echo "deb-src http://mirrors.huaweicloud.com/debian/ bookworm main non-free non-free-firmware contrib" >> /etc/apt/sources.list && \
+# echo "deb http://mirrors.huaweicloud.com/debian-security/ bookworm-security main" >> /etc/apt/sources.list && \
+# echo "deb-src http://mirrors.huaweicloud.com/debian-security/ bookworm-security main" >> /etc/apt/sources.list && \
+# echo "deb http://mirrors.huaweicloud.com/debian/ bookworm-updates main non-free non-free-firmware contrib" >> /etc/apt/sources.list && \
+# echo "deb-src http://mirrors.huaweicloud.com/debian/ bookworm-updates main non-free non-free-firmware contrib" >> /etc/apt/sources.list && \
+# echo "deb http://mirrors.huaweicloud.com/debian/ bookworm-backports main non-free non-free-firmware contrib" >> /etc/apt/sources.list && \
+# echo "deb-src http://mirrors.huaweicloud.com/debian/ bookworm-backports main non-free non-free-firmware contrib" >> /etc/apt/sources.list
 
 RUN apt update
 
 # 设置pip的镜像源
-RUN pip config set global.extra-index-url "http://mirrors.aliyun.com/pypi/simple/ https://pypi.tuna.tsinghua.edu.cn/simple/"
+# RUN pip config set global.extra-index-url "http://mirrors.aliyun.com/pypi/simple/ https://pypi.tuna.tsinghua.edu.cn/simple/"
 
 # 安装python依赖包
 RUN pip install --break-system-packages \
@@ -65,37 +59,27 @@ RUN apt install -y \
   libasound2
 
 
-RUN apt install -y git && git clone https://github.com/dsmggm/svjdck.git /jdck
+RUN apt install -y git 
+RUN git config --global http.postBuffer 524288000
+# RUN git clone --depth=1 https://github.yanjf.xyz/https://github.com/dsmggm/svjdck.git /jdck
+RUN git clone --depth=1 https://github.com/dsmggm/svjdck.git /jdck
 
-#挂载点
-VOLUME /jdck/data
-
-# 复制文件到容器内
-# COPY ./*.so /jdck/
-# COPY ./main.py /jdck/main.py
-# COPY ./start_app.py /jdck/start_app.py
-# COPY ./start_init.py /jdck/start_init.py
-# COPY ./static/ /jdck/static/
-# COPY ./templates/ /jdck/templates/
-
-# COPY ./*.py /jdck/
-
-# COPY ./start.sh /jdck/
-
-# 监听端口
-EXPOSE 4321
 
 # 设置时区
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 RUN echo "Asia/Shanghai" > /etc/timezone
 
-# RUN chmod +x /jdck/*.py
-RUN chmod +x /jdck/*.sh
+# 执行权限
+RUN chmod +x *.sh
 
 # 容器健康监测
 # HEALTHCHECK --interval=10s --timeout=2s --retries=20 \
 #   CMD curl -sf --noproxy '*' http://127.0.0.1:4321 || exit 1
 
+# 挂载点
+VOLUME /jdck/data
+# 监听端口
+EXPOSE 4321
 # 启动命令
 ENTRYPOINT ["/jdck/start.sh"]
 
