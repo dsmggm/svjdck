@@ -3,6 +3,7 @@ function savesettings() {
     var crontab_time = document.getElementById('crontab_time').value;
     var apptoken = document.getElementById('apptoken').value;
     var gg = document.getElementById('gg').value;
+    var sendtext = document.getElementById('sendtext').value;
 
     // 切换发送状态
     const element = document.getElementById('savesettings');
