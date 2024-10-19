@@ -1,36 +1,47 @@
-  
-# 脚本说明：  
-1、脚本用于使用账号密码自动登录京东获取ck，自动更新ck到青龙  
-2、建议本地登录，不建议使用代理，第一次使用手机验证码之后一般不需要验证码就可以密码登录  
-3、程序仅更新被禁用的ck  
-4、脚本需要青龙应用权限——环境变量跟脚本管理  
+# 说明
+没到这个时候
 
-  
-# windows使用说明
-运行exe即可，无需安装依赖等  
-如果windows有python环境，可能会遇到问题  
-windows定时任务参考https://blog.csdn.net/renluborenlubo/article/details/128655711  
+# 安装(未完成)
+<pre>
+docker run -dit \
+  -v ~/jdckdata/:/jdck/data \
+  -p 4321:4321 \
+  --name jdck \
+  --hostname jdck \
+  --restart always \
+  autojdck:latest
+</pre>
 
-# linux使用说明(仅x86，其它架构自行测试)  
-开发中……
+# 配置文件
+1、映射出来的data目录下位于用户目录下的jdckdata/jdck.ini
+2、配置文件用于配置青龙面板的配置，如青龙面板地址、client_id、client_secret等。
+3、admin_name和admin_password用于配置后台管理登录账密。
+3、配置示例如下：
+<pre>
+qlip=http://192.168.6.6:5700/
+client_id=Yi-s022222-
+client_secret=TChA33_22333Ng-e
+admin_name=super
+admin_password=super
+</pre>
 
-# jdck.ini配置文件位于脚本/程序同目录下
-Displaylogin=0  #是否显示登录操作，1显示，0不显示  
-qlip=http://192.168.1.1:5700  #填青龙的ip  
-client_id=*******    #填青龙对接应用的client_id  
-client_secret=*******     #填青龙对接应用的client_secret  
+# 认证
+认证文件位于jdckdata/auth
+将下方****替换为认证码即可，之后运行即可
+为了防止滥用，需要进行认证方可进行使用
+<pre>
+echo "****" > ~/jdckdata/auth && docker restart jdck
+</pre>
 
-登陆号码#密码#备注          #多账户换行  
-例如：  
-517123248#ya21udb95#我是备注1  
-15611167798#123456789#我是备注2  
+# UID回调
+在WXpusher的应用设置中，回调地址是你的网址+/get_uid
+例如：https://jd.dsmggm.cn/get_uid
 
-
-### 废案：
-```
-代理登陆变量  
-AutoJDCK_DP = http://192.168.2.1:22332    #设置登录代理（不建议设置代理，基本上要验证码）  
-```
+# 更新历史
+<pre>
+## v20241019
+- docker版本测试版本发布
+</pre>
 
 # 打赏  
 如果你觉得作者很棒，你可以打赏他  
@@ -40,3 +51,6 @@ AutoJDCK_DP = http://192.168.2.1:22332    #设置登录代理（不建议设置�
 # 免责声明  
 本脚本仅供学习参考，请在下载后24小时内删除，请勿用于非法用途。  
 作者不对因使用该脚本造成的任何损失或法律问题负责。  
+
+# 待解决
+1、后台重启按钮

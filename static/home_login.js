@@ -176,6 +176,11 @@ function submitinfo() {
         alert('账号&密码&备注-不能为空');
         return; // 如果输入为空，则不执行后续操作
     }
+    // 检查每个输入的长度是否超过字符
+    if (username.length > 20 || password.length > 30 || remark.length > 30 || uid.length > 100) {
+        alert('账号or密码or备注orUID超过字符');
+        return;
+    }
 
     // 创建一个 JSON 对象
     var data = { username: username, password: password, remark: remark, uid: uid };

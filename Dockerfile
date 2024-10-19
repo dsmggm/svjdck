@@ -14,6 +14,10 @@ WORKDIR /jdck
 # echo "deb-src http://mirrors.huaweicloud.com/debian/ bookworm-backports main non-free non-free-firmware contrib" >> /etc/apt/sources.list
 
 RUN apt update
+RUN apt install -y git \
+  locales \
+  && locale-gen zh_CN.UTF-8 \
+  && update-locale LANG=zh_CN.UTF-8
 
 # 设置pip的镜像源
 # RUN pip config set global.extra-index-url "http://mirrors.aliyun.com/pypi/simple/ https://pypi.tuna.tsinghua.edu.cn/simple/"
@@ -59,7 +63,6 @@ RUN apt install -y \
   libasound2
 
 
-RUN apt install -y git 
 RUN git config --global http.postBuffer 524288000
 # RUN git clone --depth=1 https://github.yanjf.xyz/https://github.com/dsmggm/svjdck.git /jdck
 RUN git clone --depth=1 https://github.com/dsmggm/svjdck.git /jdck
@@ -68,13 +71,17 @@ RUN git clone --depth=1 https://github.com/dsmggm/svjdck.git /jdck
 # 设置时区
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 RUN echo "Asia/Shanghai" > /etc/timezone
+# 设置环境变量以支持中文
+ENV LANG=zh_CN.UTF-8 \
+    LANGUAGE=zh_CN:zh \
+    LC_ALL=zh_CN.UTF-8
 
 # 执行权限
 RUN chmod +x *.sh
 
 # 容器健康监测
-# HEALTHCHECK --interval=10s --timeout=2s --retries=20 \
-#   CMD curl -sf --noproxy '*' http://127.0.0.1:4321 || exit 1
+HEALTHCHECK --interval=10s --timeout=2s --retries=20 \
+CMD curl -sf --noproxy '*' http://127.0.0.1:4321/health || exit 1
 
 # 挂载点
 VOLUME /jdck/data
