@@ -13,11 +13,9 @@ WORKDIR /jdck
 # echo "deb http://mirrors.huaweicloud.com/debian/ bookworm-backports main non-free non-free-firmware contrib" >> /etc/apt/sources.list && \
 # echo "deb-src http://mirrors.huaweicloud.com/debian/ bookworm-backports main non-free non-free-firmware contrib" >> /etc/apt/sources.list
 
-RUN apt update
-RUN apt install -y git \
-  locales \
-  && locale-gen zh_CN.UTF-8 \
-  && update-locale LANG=zh_CN.UTF-8
+RUN apt update && apt install -y git locales
+RUN locale-gen zh_CN.UTF-8
+RUN update-locale LANG=zh_CN.UTF-8
 
 # 设置pip的镜像源
 # RUN pip config set global.extra-index-url "http://mirrors.aliyun.com/pypi/simple/ https://pypi.tuna.tsinghua.edu.cn/simple/"
