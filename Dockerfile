@@ -3,22 +3,9 @@ FROM python:3.11-slim-bullseye
 # 设置工作目录
 WORKDIR /jdck
 
-# 修改软件源码
-# RUN echo "deb http://mirrors.huaweicloud.com/debian/ bookworm main non-free non-free-firmware contrib" > /etc/apt/sources.list && \
-# echo "deb-src http://mirrors.huaweicloud.com/debian/ bookworm main non-free non-free-firmware contrib" >> /etc/apt/sources.list && \
-# echo "deb http://mirrors.huaweicloud.com/debian-security/ bookworm-security main" >> /etc/apt/sources.list && \
-# echo "deb-src http://mirrors.huaweicloud.com/debian-security/ bookworm-security main" >> /etc/apt/sources.list && \
-# echo "deb http://mirrors.huaweicloud.com/debian/ bookworm-updates main non-free non-free-firmware contrib" >> /etc/apt/sources.list && \
-# echo "deb-src http://mirrors.huaweicloud.com/debian/ bookworm-updates main non-free non-free-firmware contrib" >> /etc/apt/sources.list && \
-# echo "deb http://mirrors.huaweicloud.com/debian/ bookworm-backports main non-free non-free-firmware contrib" >> /etc/apt/sources.list && \
-# echo "deb-src http://mirrors.huaweicloud.com/debian/ bookworm-backports main non-free non-free-firmware contrib" >> /etc/apt/sources.list
-
 RUN apt update && apt install -y git locales
 RUN locale-gen zh_CN.UTF-8
 RUN update-locale LANG=zh_CN.UTF-8
-
-# 设置pip的镜像源
-# RUN pip config set global.extra-index-url "http://mirrors.aliyun.com/pypi/simple/ https://pypi.tuna.tsinghua.edu.cn/simple/"
 
 # 安装python依赖包
 RUN pip install --break-system-packages \
@@ -62,7 +49,6 @@ RUN apt install -y \
 
 
 RUN git config --global http.postBuffer 524288000
-# RUN git clone --depth=1 https://github.yanjf.xyz/https://github.com/dsmggm/svjdck.git /jdck
 RUN git clone --depth=1 https://github.com/dsmggm/svjdck.git /jdck
 
 
