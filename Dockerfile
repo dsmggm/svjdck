@@ -1,76 +1,54 @@
-# 基本镜像
-FROM python:3.11-slim-bullseye
-# 设置工作目录
-WORKDIR /jdck
+# 此工作流使用未经 GitHub 认证的操作。
+# 它们由第三方提供，并受
+# 单独的服务条款、隐私政策和支持
+# 文档。
 
-RUN apt update && apt install -y git locales
-RUN locale-gen zh_CN.UTF-8
-# RUN update-locale LANG=zh_CN.UTF-8
+# GitHub 建议将操作固定到提交 SHA。
+# 若要获取较新版本，需要更新 SHA。
+# 还可以引用标记或分支，但该操作可能会更改而不发出警告。
 
-# 安装python依赖包
-RUN pip install --break-system-packages \
-  Pillow \
-  aiohttp \
-  aiofiles \
-  cryptography \
-  quart \
-  aiosqlite \
-  loguru \
-  playwright \
-  requests \
-  opencv-python-headless \
-  apscheduler
+name: Publish Docker image
 
-# 下载浏览器
-RUN playwright install chromium
-# 浏览器依赖
-RUN apt install -y \
-  libglib2.0-0 \
-  libnss3 \
-  libnspr4 \
-  libdbus-1-3 \
-  libatk1.0-0 \
-  libatk-bridge2.0-0 \
-  libcups2 \
-  libdrm2 \
-  libxcb1 \
-  libxkbcommon0 \
-  libatspi2.0-0 \
-  libx11-6 \
-  libxcomposite1 \
-  libxdamage1 \
-  libxext6 \
-  libxfixes3 \
-  libxrandr2 \
-  libgbm1 \
-  libpango-1.0-0 \
-  libcairo2 \
-  libasound2
+on:
+  push:
+    branches:
+      - main
 
+jobs:
+  push_to_registry:
+    name: Push Docker image to Docker Hub
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+      attestations: write
+      id-token: write
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
 
-RUN git config --global http.postBuffer 524288000
-RUN git clone --depth=1 https://github.com/dsmggm/svjdck.git /jdck
+      - name: Log in to Docker Hub
+        uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        with:
+          images: dsmggm/autojdck
 
-# 设置时区
-RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-RUN echo "Asia/Shanghai" > /etc/timezone
-# 设置环境变量以支持中文
-ENV LANG=zh_CN.UTF-8 \
-    LANGUAGE=zh_CN:zh \
-    LC_ALL=zh_CN.UTF-8
+      - name: Build and push Docker image
+        id: push
+        uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: |
+            dsmggm/autojdck:latest          # 使用latest标签
+            dsmggm/autojdck:${{ github.ref_name }}  # 使用Git标签作为版本号
+          labels: ${{ steps.meta.outputs.labels }}
 
-# 执行权限
-RUN chmod +x *.sh
-
-# 容器健康监测
-HEALTHCHECK --interval=10s --timeout=2s --retries=20 \
-CMD curl -sf --noproxy '*' http://127.0.0.1:4321/health || exit 1
-
-# 挂载点
-VOLUME /jdck/data
-# 监听端口
-EXPOSE 4321
-# 启动命令
-ENTRYPOINT ["/jdck/start.sh"]
-
+          
