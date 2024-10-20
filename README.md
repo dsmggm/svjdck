@@ -9,7 +9,7 @@ docker run -dit \
   --name jdck \
   --hostname jdck \
   --restart always \
-  autojdck:latest
+  dsmggm/autojdck:latest
 </pre>
 
 # 配置文件
