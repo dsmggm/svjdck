@@ -48,7 +48,7 @@ jobs:
           push: true
           tags: |
             dsmggm/autojdck:latest
-            dsmggm/autojdck:${{ github.ref_name }}
+            dsmggm/autojdck:${{ github.ref }}
           labels: ${{ steps.meta.outputs.labels }}
 
           
