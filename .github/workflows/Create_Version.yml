@@ -1,4 +1,4 @@
-name: Create Tag on Push to Main
+name: Create Tag and Release
 
 on:
   push:
@@ -21,7 +21,7 @@ jobs:
       - name: 获取版本
         id: get_version
         run: |
-          VERSION=$(date +'%Y%m%d%H%M%S')
+          VERSION=$(date +'%Y%m%d')
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: 创建版本
