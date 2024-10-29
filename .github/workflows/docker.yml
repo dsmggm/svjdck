@@ -46,7 +46,9 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: |
+            dsmggm/autojdck:latest          # 使用latest标签
+            dsmggm/autojdck:${{ github.ref_name }}  # 使用Git标签作为版本号
           labels: ${{ steps.meta.outputs.labels }}
 
           
