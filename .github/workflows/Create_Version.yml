@@ -1,4 +1,4 @@
-name: Create Tag and Release
+name: 创建 Tag and Release
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  create-tag:
+  create-ReleaseAndTag:
     runs-on: ubuntu-latest  # 使用最新的 Ubuntu 环境
 
     steps:
