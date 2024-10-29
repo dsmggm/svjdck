@@ -1,4 +1,4 @@
-name: 创建 Tag and Release
+name: 创建 Tag And Release
 
 on:
   push:
