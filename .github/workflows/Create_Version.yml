@@ -18,25 +18,6 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
 
-      - name: 获取当前日期
-        id: get_date
-        run: |
-          # 获取当前日期，格式为 yyyymmdd
-          TAG_DATE=$(date +'%Y%m%d')
-          echo "TAG_DATE=$TAG_DATE" >> $GITHUB_ENV
-
-      - name: 创建推送标签
-        run: |
-          # 使用当前日期作为标签名
-          git tag $TAG_DATE
-          git push origin $TAG_DATE
-
-      - name: 验证标签
-        run: |
-          # 验证是否成功创建并推送了标签
-          git fetch --tags
-          git tag -l
-
       - name: 获取版本
         id: get_version
         run: |
@@ -46,7 +27,7 @@ jobs:
       - name: 创建版本
         uses: actions/create-release@v1
         with:
-          tag_name: v${{ env.VERSION }}
+          tag_name: ${{ env.VERSION }}
           release_name: ${{ env.VERSION }}
           draft: false
           prerelease: false
