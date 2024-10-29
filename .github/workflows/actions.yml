@@ -18,7 +18,7 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
 
-      - name: 获取版本
+      - name: 设置版本号
         id: get_version
         run: |
           VERSION=$(date +'%Y%m%d')
@@ -33,6 +33,7 @@ jobs:
           prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 
 
   push_to_DockerHub:
@@ -59,6 +60,12 @@ jobs:
         with:
           images: dsmggm/autojdck
 
+      - name: 设置docker版本号
+        id: get_version
+        run: |
+          VERSION=$(date +'%Y%m%d')
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
       - name: 构建推送docker镜像
         id: push
         uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
@@ -68,5 +75,5 @@ jobs:
           push: true
           tags: |
             dsmggm/autojdck:latest
-            dsmggm/autojdck:${{ github.ref }}
+            dsmggm/autojdck:${{ env.VERSION }}
           labels: ${{ steps.meta.outputs.labels }}
