@@ -1,7 +1,8 @@
 # 说明
 没到这个时候
 
-# 安装(未完成)
+# docker部署
+docker部署命令：
 <pre>
 docker run -dit \
   -v ~/jdckdata/:/jdck/data \
@@ -26,8 +27,9 @@ admin_password=super
 </pre>
 
 # 认证
+设备ID文件位于data/device_id（用于获取赞赏码）
 认证文件位于jdckdata/auth
-将下方****替换为认证码即可，之后运行即可
+将下方****替换为赞赏码即可，之后运行即可
 为了防止滥用，需要进行认证方可进行使用
 <pre>
 echo "****" > ~/jdckdata/auth && docker restart jdck
@@ -41,6 +43,8 @@ echo "****" > ~/jdckdata/auth && docker restart jdck
 <pre>
 ## v20241019
 - docker版本测试版本发布
+## v20241030
+- docker镜像发布
 </pre>
 
 # 打赏  
