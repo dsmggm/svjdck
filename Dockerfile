@@ -5,7 +5,7 @@ WORKDIR /jdck
 
 RUN apt update && apt install -y git locales
 RUN locale-gen zh_CN.UTF-8
-RUN update-locale LANG=zh_CN.UTF-8
+# RUN update-locale LANG=zh_CN.UTF-8
 
 # 安装python依赖包
 RUN pip install --break-system-packages \
