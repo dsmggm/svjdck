@@ -56,9 +56,9 @@ RUN git clone --depth=1 https://github.com/dsmggm/svjdck.git /jdck
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 RUN echo "Asia/Shanghai" > /etc/timezone
 # 设置环境变量以支持中文
-ENV LANG=zh_CN.UTF-8 \
-    LANGUAGE=zh_CN:zh \
-    LC_ALL=zh_CN.UTF-8
+ENV LANG=zh_CN.UTF-8
+ENV LANGUAGE=zh_CN.UTF-8
+ENV LC_ALL=zh_CN.UTF-8
 
 # 执行权限
 RUN chmod +x *.sh
