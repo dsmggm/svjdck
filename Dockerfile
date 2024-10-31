@@ -19,7 +19,8 @@ RUN pip install --break-system-packages \
   playwright \
   requests \
   opencv-python-headless \
-  apscheduler
+  apscheduler \
+  pygit2
 
 # 下载浏览器
 RUN playwright install chromium
