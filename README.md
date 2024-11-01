@@ -31,6 +31,7 @@ admin_password=super
 赞赏码文件位于jdckdata/auth  
 将下方****替换为赞赏码即可，之后运行即可  
 为了防止滥用，需要进行认证方可进行使用  
+<span style="color: red;">重建容器认证会失效</span>  
 <pre>
 echo "****" > ~/jdckdata/auth && docker restart jdck
 </pre>
@@ -50,6 +51,8 @@ docker logs -f 200 jdck
 - docker版本测试版本发布
 ## v20241030
 - docker镜像发布
+## v20241101
+- 修复推送UID二维码关注问题
 </pre>
 
 # 打赏  
