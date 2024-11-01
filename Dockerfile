@@ -19,8 +19,7 @@ RUN pip install --break-system-packages \
   playwright \
   requests \
   opencv-python-headless \
-  apscheduler \
-  pygit2
+  apscheduler
 
 # 下载浏览器
 RUN playwright install chromium
@@ -73,5 +72,5 @@ VOLUME /jdck/data
 # 监听端口
 EXPOSE 4321
 # 启动命令
-ENTRYPOINT ["/jdck/start.sh"]
+ENTRYPOINT ["sh", "-c", "chmod +x /jdck/start.sh && /jdck/start.sh"]
 

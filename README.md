@@ -53,6 +53,7 @@ docker logs -f 200 jdck
 - docker镜像发布
 ## v20241101
 - 修复推送UID二维码关注问题
+- 自动更新机制
 </pre>
 
 # 打赏  
