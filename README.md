@@ -4,6 +4,8 @@ apptoken用于青龙wxpusher一对一推送，例如6dylan库
   
 登录页面：http://ip:4321  
 后台管理连接：http://ip:4321/admin  
+
+[插件开发API](https://github.com/dsmggm/svjdck/blob/main/README_API.md)可以看这里  
 # docker部署
 docker部署命令：  
 <pre>

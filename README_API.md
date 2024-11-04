@@ -268,6 +268,7 @@ cookie有效期1800秒，每次请求都会刷新时间
 {
   "msg": "Invalid cookie or expired"
 }
+```
 
 - **响应**:
   - **状态码**: `500`
