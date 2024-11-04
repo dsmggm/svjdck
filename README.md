@@ -1,6 +1,9 @@
 # 说明
 禁止🚫大黄狗及其狗腿子访问，请自觉退出  
-
+apptoken用于青龙wxpusher一对一推送，例如6dylan库  
+  
+登录页面：http://ip:4321  
+后台管理连接：http://ip:4321/admin  
 # docker部署
 docker部署命令：  
 <pre>
