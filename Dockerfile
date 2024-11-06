@@ -3,7 +3,10 @@ FROM python:3.11-slim-bullseye
 # 设置工作目录
 WORKDIR /jdck
 
-RUN apt update && apt install -y git locales
+RUN apt update && apt install -y \
+  git \
+  locales \
+  gnupg
 RUN locale-gen zh_CN.UTF-8
 # RUN update-locale LANG=zh_CN.UTF-8
 
@@ -16,7 +19,7 @@ RUN pip install --break-system-packages \
   quart \
   aiosqlite \
   loguru \
-  playwright \
+  playwright==1.46.0 \
   requests \
   opencv-python-headless \
   apscheduler
@@ -64,7 +67,7 @@ ENV LC_ALL=zh_CN.UTF-8
 RUN chmod +x *.sh
 
 # 容器健康监测
-HEALTHCHECK --interval=10s --timeout=2s --retries=20 \
+HEALTHCHECK --interval=30s --timeout=3s --retries=5 \
 CMD curl -sf --noproxy '*' http://127.0.0.1:4321/health || exit 1
 
 # 挂载点
