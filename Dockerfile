@@ -26,6 +26,7 @@ RUN pip install --break-system-packages \
 
 # 下载浏览器
 RUN playwright install chromium
+
 # 浏览器依赖
 RUN apt install -y \
   libglib2.0-0 \
