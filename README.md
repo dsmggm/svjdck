@@ -37,7 +37,7 @@ admin_password=super
 赞赏码文件位于jdckdata/auth  
 将下方****替换为赞赏码即可，之后运行即可  
 为了防止滥用，需要进行认证方可进行使用  
-_**`重建容器认证会失效`**_  
+⚠⚠⚠**`重建容器认证会失效`** ⚠⚠⚠
 <pre>
 echo "****" > ~/jdckdata/auth && docker restart jdck
 </pre>
