@@ -3,8 +3,8 @@
 apptoken用于青龙wxpusher一对一推送，例如6dylan库  
 仅用于推送自动登录失败的通知  
   
-登录页面：http://ip:4321  
-后台管理连接：http://ip:4321/admin  
+登录页面：ip:4321  
+后台管理连接：ip:4321/admin  
 
 开发插件[API](https://github.com/dsmggm/svjdck/blob/main/README_API.md)可以看这里  
 # docker部署
