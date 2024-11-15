@@ -2,9 +2,13 @@
 禁止🚫大黄狗及其狗腿子访问，请自觉退出  
 apptoken用于青龙wxpusher一对一推送，例如6dylan库  
 仅用于推送自动登录失败的通知  
-  
-登录页面：ip:4321  
-后台管理连接：ip:4321/admin  
+仅支持新版青龙  
+仅更新被禁用的ck  
+登陆页面默认强制使用https协议
+⚠需要稳定的网络环境  
+
+登录页面：https://ip:4321  
+后台管理连接：https://ip:4321/admin  
 
 开发插件[API](https://github.com/dsmggm/svjdck/blob/main/README_API.md)可以看这里  
 # docker部署
@@ -37,19 +41,27 @@ admin_password=super
 赞赏码文件位于jdckdata/auth  
 将下方****替换为赞赏码即可，之后运行即可  
 为了防止滥用，需要进行认证方可进行使用  
-⚠⚠⚠**`重建容器认证会失效`** ⚠⚠⚠
+⚠⚠⚠`重建容器认证会失效`⚠⚠⚠  
 <pre>
 echo "****" > ~/jdckdata/auth && docker restart jdck
 </pre>
 
 # 查看容器日志
+查看容器最后200条日志
 <pre>
-docker logs -f 200 jdck
+docker logs -f --tail 200 jdck
 </pre>
 
 # UID回调
 在WXpusher的应用设置中，回调地址是你的网址+/get_uid  
 例如：https://jd.dsmggm.cn/get_uid  
+
+# 自定义SSL证书
+1. 默认强制使用https协议
+2. 将证书文件放入data/certs/certfile.crt  
+3. 将证书密钥放入data/certs/keyfile.key  
+4. 重启容器  
+5. 如果不配置证书，则使用内置证书  
 
 # 更新历史
 <pre>
@@ -68,6 +80,11 @@ docker logs -f 200 jdck
 - 解决过期推送失败的问题
 ## v20241107
 - 优化性能
+## v20241108
+- 修复登陆页"发送验证码"显示间距问题
+## v20241113
+- 后台增加请求更新按钮
+- 增加自带ssl证书，提高账号密码传输安全性
 </pre>
 
 # 打赏  
