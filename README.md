@@ -4,7 +4,7 @@ apptoken用于青龙wxpusher一对一推送，例如6dylan库
 仅用于推送自动登录失败的通知  
 仅支持新版青龙  
 仅更新被禁用的ck  
-登陆页面默认强制使用https协议  
+访问页面请使用https协议  
 ⚠ 自动登录需要稳定的网络环境  
 
 登录页面：https://ip:4321  
@@ -57,11 +57,12 @@ docker logs -f --tail 200 jdck
 例如：https://jd.dsmggm.cn/get_uid  
 
 # 自定义SSL证书
-1. 默认强制使用https协议
+1. 默认强制使用https协议  
 2. 将证书文件放入data/certs/certfile.crt  
 3. 将证书密钥放入data/certs/keyfile.key  
 4. 重启容器  
-注：如果不配置证书，则使用内置证书  
+5. 如果有需要可以到[let's Encrypt](https://letsencrypt.org/zh-cn/getting-started/)免费获取证书  
+注：如果不配置证书，则使用内置证书，内置证书会提示不安全  
 
 # 更新历史
 <pre>
@@ -85,6 +86,12 @@ docker logs -f --tail 200 jdck
 ## v20241115
 - 后台增加请求更新按钮
 - 增加自带ssl证书，提高账号密码传输安全性
+## v20241204
+- 临时解决京东新验证方式
+- 更新了授权验证方式
+- 后台管理增加重启按钮
+- 修复版本显示问题
+- 更新了未知的bug
 </pre>
 
 # 打赏  
@@ -95,3 +102,6 @@ docker logs -f --tail 200 jdck
 # 免责声明  
 本脚本仅供学习参考，请在下载后24小时内删除，请勿用于非法用途。  
 作者不对因使用该脚本造成的任何损失或法律问题负责。  
+
+# 待更新项
+1. 版本显示问题
