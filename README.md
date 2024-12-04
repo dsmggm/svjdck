@@ -94,6 +94,7 @@ docker logs -f --tail 200 jdck
 - 更新了未知的bug
 ## v20241205
 - 修复上一个版本未知bug
+- 更新版本显示问题
 </pre>
 
 # 打赏  
