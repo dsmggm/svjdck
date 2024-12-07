@@ -29,7 +29,7 @@ docker run -dit \
 3、admin_name和admin_password用于配置后台管理登录账密。  
 3、配置示例如下：  
 <pre>
-qlip=http://192.168.6.6:5700/
+qlip=http://192.168.6.6:5700
 client_id=Yi-s022222-
 client_secret=TChA33_22333Ng-e
 admin_name=super
@@ -87,7 +87,7 @@ docker logs -f --tail 200 jdck
 - 后台增加请求更新按钮
 - 增加自带ssl证书，提高账号密码传输安全性
 ## v20241204
-- 临时解决京东新验证方式
+- 临时解决jd新验证方式
 - 更新了授权验证方式
 - 后台管理增加重启按钮
 - 修复版本显示问题
@@ -95,6 +95,9 @@ docker logs -f --tail 200 jdck
 ## v20241205
 - 修复上一个版本未知bug
 - 更新版本显示问题
+## v20241207
+- 修复已知bug
+- 应对jd加强滑块验证问题
 </pre>
 
 # 打赏  
