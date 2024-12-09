@@ -17,6 +17,7 @@ docker部署命令：
 docker run -dit \
   -v ~/jdckdata/:/jdck/data \
   -p 4321:4321 \
+  -p 54321:54321 \
   --name jdck \
   --hostname jdck \
   --restart always \
@@ -53,13 +54,14 @@ docker logs -f --tail 200 jdck
 </pre>
 
 # UID回调
-在WXpusher的应用设置中，回调地址是你的网址+/get_uid  
+在WxPusher的应用设置中，回调地址是你的网址+/get_uid  
 例如：https://jd.dsmggm.cn/get_uid  
 
 # 自定义SSL证书
 1. 默认强制使用https协议  
 2. 将证书文件放入data/certs/certfile.crt  
 3. 将证书密钥放入data/certs/keyfile.key  
+
 4. 重启容器  
 5. 如果有需要可以到[let's Encrypt](https://letsencrypt.org/zh-cn/getting-started/)免费获取证书  
 注：如果不配置证书，则使用内置证书，内置证书会提示不安全  
@@ -98,6 +100,10 @@ docker logs -f --tail 200 jdck
 ## v20241207
 - 修复已知bug
 - 应对jd加强滑块验证问题
+## v20241209
+- 修复更新问题
+- 重新放开http，默认端口54321
+
 </pre>
 
 # 打赏  
