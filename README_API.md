@@ -88,8 +88,8 @@ API更新日期：20241104
   - **响应体**:
 ```json
 {
-  "status": "login_success",
-  "msg": "提交成功"  
+  "msg": "提交成功",
+  "status": "submit_success"
 }
 ```
 

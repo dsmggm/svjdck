@@ -1,11 +1,11 @@
 # 说明
 禁止🚫大黄狗及其狗腿子访问，请自觉退出  
+项目由py开发，之后通过github自动转义为so提高性能。  
 apptoken用于青龙wxpusher一对一推送，例如6dylan库  
 仅用于推送自动登录失败的通知  
 仅支持新版青龙  
 仅更新被禁用的ck  
 访问页面请使用https协议  
-⚠ 自动登录需要稳定的网络环境  
 
 登录页面：https://ip:4321  
 后台管理连接：https://ip:4321/admin  
@@ -38,11 +38,13 @@ admin_password=super
 </pre>
 
 # 认证
-设备ID文件位于jdckdata/device_id（用于获取赞赏码）  
-赞赏码文件位于jdckdata/auth  
-将下方****替换为赞赏码即可，之后运行即可  
+设备ID文件位于jdckdata/device_id  
+赞赏码添加Bot，备注svjdck  
+发送'svjdck授权'  
+  
 为了防止滥用，需要进行认证方可进行使用  
 ⚠⚠⚠`重建容器认证会失效`⚠⚠⚠  
+![DsmggmBot](DsmggmBot.png)
 <pre>
 echo "****" > ~/jdckdata/auth && docker restart jdck
 </pre>
@@ -103,6 +105,9 @@ docker logs -f --tail 200 jdck
 ## v20241209
 - 修复更新问题
 - 重新放开http，默认端口54321
+## v20241211
+- 更新了版本号
+- 更新了api文档的一处错误
 
 </pre>
 
@@ -115,3 +120,6 @@ docker logs -f --tail 200 jdck
 本脚本仅供学习参考，请在下载后24小时内删除，请勿用于非法用途。  
 作者不对因使用该脚本造成的任何损失或法律问题负责。  
 
+# 待完成
+1. 无界对接插件
+2. autman对接插件
