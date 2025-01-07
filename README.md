@@ -44,6 +44,8 @@ admin_password=super
   
 为了防止滥用，需要进行认证方可进行使用  
 ⚠⚠⚠`重建容器认证会失效`⚠⚠⚠  
+  
+![DsmggmBot](qq.png)
 ![DsmggmBot](DsmggmBot.png)
 <pre>
 echo "****" > ~/jdckdata/auth && docker restart jdck
@@ -112,7 +114,8 @@ docker logs -f --tail 200 jdck
 - 修复了部分bug
 ## v20250104
 - 增加滑块成功率
-
+## v20250107
+- 修复自动登陆应对jd改页面导致的问题
 </pre>
 
 # 打赏  
