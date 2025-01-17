@@ -4,18 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AUTOJDCK2管理后台</title>
-    <link rel="icon" type="image/x-icon" href="./static/favicon.ico" />
-    <link rel="stylesheet" href="./static/admin_users.css"/>
-    <script src="static/admin_users.js"></script>
+    <link rel="icon" type="image/x-icon" href="../static/images/favicon.ico" />
+    <link rel="stylesheet" href="../static/css/admin_users.css"/>
+    <script src="../static/js/admin_users.js"></script>
 </head>
 <body>
     <h1 class="title_a">AUTOJDCK2管理后台</h1>
     <!-- 管理界面 -->
     <div class="manage_web" id="manage_web">
         <nav class="container">
-          <a class="child" href="/admin_set">参数设置</a>
-          <a class="child" href="/admin_users">账号管理</a>
+          <a class="child" href="/admin/set">参数设置</a>
+          <a class="child" href="/admin/users">账号管理</a>
         </nav>
+        <div>
+            <button class="savesettings" id="update" onclick="enalbeall()">一键启用全部账号</button>
+        </div>
     </div>
     <!-- 用户管理 -->
     <div class="users_form">
@@ -30,15 +33,13 @@
                         <th>UUID</th>
                         <th>pt_pin</th>
                         <th>状态</th>
+                        <th>登录结果</th>
                         <th>操作</th>
                     </tr>
                 </thead>
                 <tbody id="data-tbody">
                 </tbody>
             </table>
-        </div>
-        <div>
-            <button class="savesettings" id="update" onclick="enalbeall()">一键启用全部账号</button>
         </div>
     </div>
     <div id="edit-modal"></div>

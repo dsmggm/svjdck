@@ -6,9 +6,12 @@ apptoken用于青龙wxpusher一对一推送，例如6dylan库
 仅支持新版青龙  
 仅更新被禁用的ck  
 访问页面请使用https协议  
+⚠ 自动登录需要稳定的网络环境  
 
-登录页面：https://ip:4321  
-后台管理连接：https://ip:4321/admin  
+登录页面：http://ip:4321  
+后台管理连接：http://ip:4321/admin  
+默认使用http，可在后台开启https  
+（使用默认证书浏览器都会报网页不安全，使用https请看自定义SSL证书）  
 
 开发插件[API](https://github.com/dsmggm/svjdck/blob/main/README_API.md)可以看这里  
 # docker部署
@@ -17,7 +20,6 @@ docker部署命令：
 docker run -dit \
   -v ~/jdckdata/:/jdck/data \
   -p 4321:4321 \
-  -p 54321:54321 \
   --name jdck \
   --hostname jdck \
   --restart always \
@@ -38,18 +40,15 @@ admin_password=super
 </pre>
 
 # 认证
-设备ID文件位于jdckdata/device_id  
-赞赏码添加Bot，备注svjdck  
-发送'svjdck授权'  
+设备ID可在日志中查看或“jdckdata/device_id文件”  
+添加Bot，备注svjdck  
+
   
 为了防止滥用，需要进行认证方可进行使用  
 ⚠⚠⚠`重建容器认证会失效`⚠⚠⚠  
   
 ![DsmggmBot](qq.png)
 ![DsmggmBot](DsmggmBot.png)
-<pre>
-echo "****" > ~/jdckdata/auth && docker restart jdck
-</pre>
 
 # 查看容器日志
 查看容器最后200条日志
@@ -62,13 +61,12 @@ docker logs -f --tail 200 jdck
 例如：https://jd.dsmggm.cn/get_uid  
 
 # 自定义SSL证书
-1. 默认强制使用https协议  
+1. 默认使用http协议  
 2. 将证书文件放入data/certs/certfile.crt  
 3. 将证书密钥放入data/certs/keyfile.key  
-
 4. 重启容器  
-5. 如果有需要可以到[let's Encrypt](https://letsencrypt.org/zh-cn/getting-started/)免费获取证书  
-注：如果不配置证书，则使用内置证书，内置证书会提示不安全  
+5. ssl证书可以申请[let's Encrypt](https://letsencrypt.osfipin.com/jump/share?code=RK4KXEV6)的免费证书，验证方式使用dns验证    
+注：如果不配置证书，则使用内置证书，内置证书浏览器都会提示不安全  
 
 # 更新历史
 <pre>
@@ -113,11 +111,20 @@ docker logs -f --tail 200 jdck
 ## v20250103
 - 修复了部分bug
 ## v20250104
-- 增加滑块成功率
+- 增加滑块成功率  
 ## v20250107
-- 修复自动登陆应对jd改页面导致的问题
+- 修复自动登陆应对jd改页面导致的问题  
 ## v20250108
-- 修复登陆应对jd改页面导致的问题
+- 修复登陆应对jd改页面导致的问题  
+## v20250115
+- 重构大部分代码
+- 优化进程线程性能
+- 记录最后一次登录结果
+- 返回ck给前端
+- 更新数据库结构
+- 缩小docker镜像体积
+- 更新了api
+
 </pre>
 
 
