@@ -6,7 +6,6 @@ apptoken用于青龙wxpusher一对一推送，例如6dylan库
 仅支持新版青龙  
 仅更新被禁用的ck  
 默认使用http协议  
-
 ⚠ 自动登录需要稳定的网络环境  
 
 登录页面：http://ip:4321  
@@ -23,7 +22,7 @@ docker run -dit \
   -p 4321:4321 \
   --name jdck \
   --hostname jdck \
-  --restart always \
+  --restart unless-stopped \
   dsmggm/autojdck:latest
 </pre>
 
