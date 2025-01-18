@@ -13,24 +13,17 @@ logger.add("./data/log/jdck.log",
 
 def update():
     try:
-        if os.path.exists('/update'):
-            logger.debug(f"升级文件")
-            subprocess.run('rm -rf /update/svjdck-main/start.py', check=True, shell=True)
-            subprocess.run('cp -r /update/svjdck-main/* /jdck/', check=True, shell=True)
-            subprocess.run('rm -rf /update', check=True, shell=True)
-            return 'ok'
-    except subprocess.CalledProcessError as e:
-        logger.error(f"升级文件时出现异常: {e}")
-        return e
+        subprocess.run('rm -rf /update/svjdck-main/start.py', check=True, shell=True)
+        subprocess.run('cp -r /update/svjdck-main/* /jdck/', check=True, shell=True)
+        subprocess.run('rm -rf /update', check=True, shell=True)
+        logger.debug(f"升级文件完成")
     except Exception as e:
-        logger.error(f"复制文件时发生错误: {e}")
-        return e
+        pass
 
 
 if __name__ == '__main__':
     try:
-        if update() == 'ok':
-            logger.debug("jdck升级完成")
+        update()
         logger.info("jdck启动")
         import main
         main.main()
