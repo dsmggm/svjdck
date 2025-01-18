@@ -5,13 +5,14 @@ apptoken用于青龙wxpusher一对一推送，例如6dylan库
 仅用于推送自动登录失败的通知  
 仅支持新版青龙  
 仅更新被禁用的ck  
-访问页面请使用https协议  
+默认使用http协议  
+
 ⚠ 自动登录需要稳定的网络环境  
 
 登录页面：http://ip:4321  
 后台管理连接：http://ip:4321/admin  
 默认使用http，可在后台开启https  
-（使用默认证书浏览器都会报网页不安全，使用https请看自定义SSL证书）  
+（使用默认证书浏览器都会报网页不安全，使用https请看自定义SSL证书说明）  
 
 开发插件[API](https://github.com/dsmggm/svjdck/blob/main/README_API.md)可以看这里  
 # docker部署
