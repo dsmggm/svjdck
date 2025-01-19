@@ -131,6 +131,8 @@ docker logs -f --tail 200 jdck
 ## v20250118
 - 调整docker容积
 - 修改API文档中的错误
+## v20250119
+- 修复已知bug
 
 
 </pre>
