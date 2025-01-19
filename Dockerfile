@@ -51,15 +51,13 @@ RUN pip install --break-system-packages --no-cache-dir \
 # 安装浏览器
 RUN playwright install chromium
 
-# 安装设置语言环境
-RUN echo "zh_CN.UTF-8 UTF-8" >> /etc/locale.gen \
-  && locale-gen zh_CN.UTF-8 \
-  && update-locale LANG=zh_CN.UTF-8
-
-
 # 设置时区
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
-  && echo "Asia/Shanghai" > /etc/timezone
+  && echo "Asia/Shanghai" > /etc/timezone \
+  # 安装设置语言环境
+  && echo "zh_CN.UTF-8 UTF-8" >> /etc/locale.gen \
+  && locale-gen zh_CN.UTF-8 \
+  && update-locale LANG=zh_CN.UTF-8
 
 # 复制当前文件到工作目录
 COPY . .

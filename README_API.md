@@ -52,7 +52,7 @@ API更新日期：20241211
   "remarks": "备注",
   "uid": "UID",
   "pt_pin": "jd_pt_pin",
-  "pt_pin": "jd_pt_pin"
+  "pt_key": "jd_pt_key"
 }
 ```
 
