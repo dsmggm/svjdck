@@ -133,6 +133,8 @@ docker logs -f --tail 200 jdck
 - 修改API文档中的错误
 ## v20250119
 - 修复已知bug
+## v20250120
+- 修改web启动配置
 
 
 </pre>
