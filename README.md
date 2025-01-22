@@ -135,6 +135,8 @@ docker logs -f --tail 200 jdck
 - 修复已知bug
 ## v20250120
 - 修改web启动配置
+## v20250122
+- 尝试修复已知bug
 
 
 </pre>
