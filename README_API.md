@@ -372,12 +372,7 @@ cookie有效期1800秒，每次请求都会刷新时间
 - **请求体**:
 ```json
 {
-  "passwd_value": "密码",
-  "pt_pin": "jd_pt_pin",
-  "remarks_value": "备注",
-  "status": 1,
-  "user_value": "账号",
-  "uuid_value": "UID"
+  "username": "账号"
 }
 ```
 
