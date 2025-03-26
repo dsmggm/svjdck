@@ -4,7 +4,7 @@ from loguru import logger
 import subprocess, os
 
 logger.add("./data/log/jdck.log", 
-            rotation="512 KB",  # 当文件达到1KB时轮转
+            rotation="5 MB",  # 当文件达到1KB时轮转
             retention="30 days", # 保留10天的日志文件
             compression="zip",   # 压缩旧的日志文件
             enqueue=True,   # 使用队列来写入
