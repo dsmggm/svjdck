@@ -23,6 +23,7 @@ docker run -dit \
   --name jdck \
   --hostname jdck \
   --restart unless-stopped \
+  --log-opt max-size=10m --log-opt max-file=3 \
   dsmggm/autojdck:latest
 </pre>
 
@@ -146,6 +147,9 @@ docker logs -f --tail 200 jdck
 - 修改api文档中的错误
 ## v20250326
 - 修复京东验证码识别问题
+## v20250524
+- 更新docker容器创建命令，限制log大小
+- 修复滑块验证问题
 
 
 </pre>
