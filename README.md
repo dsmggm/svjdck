@@ -154,6 +154,8 @@ docker logs -f --tail 200 jdck
 - 增加登录超时截图
 ## v20250601
 - 修复已知bug
+## v20250613
+- 修复已知bug
 
 </pre>
 
