@@ -178,6 +178,8 @@ docker logs -f --tail 200 jdck
 - 增加封号账号类型
 ## v20250816
 - 修复已知bug
+## v20250817
+- 修复已知bug
 
 </pre>
 
