@@ -27,6 +27,24 @@ docker run -dit \
   dsmggm/autojdck:latest
 </pre>
 
+docker compose部署：  
+<pre>
+services:
+  jdck:
+    image: dsmggm/autojdck:latest   # 使用的镜像
+    container_name: jdck           # 容器名称
+    restart: unless-stopped                  # 重启策略
+    ports:
+      - "4321:4321"                   # 映射端口
+    volumes:
+      - jdckdata/:/jdck/data                # 数据卷挂载
+    logging:
+      options:
+        max-size: "10m"              # 单个日志文件最大10MB
+        max-file: "3"                # 最多保留3个日志文件
+        compress: "true"             # 日志文件压缩
+</pre>
+
 # 配置文件
 1、创建~/jdckdata/jdck.ini文件  
 2、配置文件用于配置青龙面板的配置，如青龙面板地址、client_id、client_secret等。  
@@ -155,6 +173,10 @@ docker logs -f --tail 200 jdck
 ## v20250601
 - 修复已知bug
 ## v20250613
+- 修复已知bug
+## v20250702
+- 增加封号账号类型
+## v20250816
 - 修复已知bug
 
 </pre>
