@@ -186,6 +186,8 @@ docker logs -f --tail 200 jdck
 - 修复已知bug
 ## v202509300
 - 修复已知bug
+## v20251002
+- 修复已知bug
 </pre>
 
 
