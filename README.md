@@ -14,6 +14,8 @@ apptoken用于青龙wxpusher一对一推送，例如6dylan库
 （使用默认证书浏览器都会报网页不安全，使用https请看自定义SSL证书说明）  
 
 开发插件[API](https://github.com/dsmggm/svjdck/blob/main/README_API.md)可以看这里  
+无界Bncr对接插件[https://github.com/dsmggm/bncr](https://github.com/dsmggm/bncr)  
+
 # docker部署
 docker部署命令：  
 <pre>
@@ -61,7 +63,8 @@ admin_password=super
 # 认证
 设备ID可在日志中查看或“jdckdata/device_id文件”  
 添加Bot，备注svjdck  
-
+  
+授权码离线认证文件将授权码保存在data/auth文件中  
   
 为了防止滥用，需要进行认证方可进行使用  
 ⚠⚠⚠`重建容器认证会失效`⚠⚠⚠  
@@ -187,6 +190,8 @@ docker logs -f --tail 200 jdck
 ## v202509300
 - 修复已知bug
 ## v20251002
+- 修复已知bug
+## v20251007
 - 修复已知bug
 </pre>
 
