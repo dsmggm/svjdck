@@ -8,7 +8,7 @@ logger.add("./data/log/jdck.log",
             retention="30 days", # 保留10天的日志文件
             compression="zip",   # 压缩旧的日志文件
             enqueue=True,   # 使用队列来写入
-            level="INFO")        
+            level="INFO")   # 设置日志级别为INFO
 
 
 def update():
