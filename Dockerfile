@@ -46,7 +46,6 @@ RUN pip install --break-system-packages --no-cache-dir \
   Pillow \
   quart \
   opencv-python-headless>=4.6.0 \
-  AntiCAP \
   playwright  \
   onnxruntime \
   numpy<2.0.0 \
