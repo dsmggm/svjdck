@@ -45,9 +45,12 @@ RUN pip install --break-system-packages --no-cache-dir \
   requests \
   Pillow \
   quart \
-  opencv-python-headless \
+  opencv-python-headless>=4.6.0 \
   AntiCAP \
-  playwright 
+  playwright  \
+  onnxruntime \
+  numpy<2.0.0 \
+  ultralytics~=8.3.96
 
 # 安装浏览器
 RUN playwright install chromium
