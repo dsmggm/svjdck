@@ -23,7 +23,7 @@ def update():
 
 if __name__ == '__main__':
     try:
-        # update()
+        update()
         logger.info("jdck启动")
         import main
         main.main()
