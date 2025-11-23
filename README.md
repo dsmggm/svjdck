@@ -195,6 +195,8 @@ docker logs -f --tail 200 jdck
 - 修复已知bug
 ## v20251024
 - 修复已知bug
+## v20251123
+- 尝试修复旋转验证
 </pre>
 
 

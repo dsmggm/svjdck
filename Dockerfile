@@ -46,6 +46,7 @@ RUN pip install --break-system-packages --no-cache-dir \
   Pillow \
   quart \
   opencv-python-headless \
+  AntiCAP \
   playwright 
 
 # 安装浏览器
