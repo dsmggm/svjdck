@@ -28,6 +28,10 @@ RUN apt update && apt install --no-install-recommends -y \
   libpango-1.0-0 \
   libcairo2 \
   libasound2 \
+  # acticap依赖
+  libgl1 \
+  libgl1-mesa-glx \
+  libgles2 \
   # 字体
   locales \
   fonts-wqy-zenhei fonts-wqy-microhei \
