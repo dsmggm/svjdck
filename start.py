@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from loguru import logger
-import subprocess, os
+import subprocess
 
 logger.add("./data/log/jdck.log", 
             rotation="5 MB",  # 当文件达到1KB时轮转
