@@ -51,13 +51,15 @@ services:
 1、创建~/jdckdata/jdck.ini文件  
 2、配置文件用于配置青龙面板的配置，如青龙面板地址、client_id、client_secret等。  
 3、admin_name和admin_password用于配置后台管理登录账密。  
-3、配置示例如下：  
+4、restart配置项用于控制是否自动重启容器。  
+5、配置示例如下：  
 <pre>
 qlip=http://192.168.6.6:5700
 client_id=Yi-s022222-
 client_secret=TChA33_22333Ng-e
 admin_name=super
 admin_password=super
+restart=true
 </pre>
 
 # 认证
@@ -201,6 +203,11 @@ docker logs -f --tail 200 jdck
 - 修复已知bug
 ## v20251130
 - 修复已知bug
+## v20251211
+- 添加open_status配置项，用于控制是否自动开启全部账号
+- 添加restart配置项，用于控制是否自动重启
+## v20260331
+- 去除图像验证码验证
 </pre>
 
 
