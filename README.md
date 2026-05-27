@@ -52,7 +52,9 @@ services:
 2、配置文件用于配置青龙面板的配置，如青龙面板地址、client_id、client_secret等。  
 3、admin_name和admin_password用于配置后台管理登录账密。  
 4、restart配置项用于控制是否自动重启容器。  
-5、配置示例如下：  
+5、open_statis配置是否每次都自动启用账号，默认true。  
+6、debug配置是否保留截图，默认false。  
+7、配置示例如下：  
 <pre>
 qlip=http://192.168.6.6:5700
 client_id=Yi-s022222-
@@ -60,6 +62,8 @@ client_secret=TChA33_22333Ng-e
 admin_name=super
 admin_password=super
 restart=true
+open_statis=true
+debug=false
 </pre>
 
 # 认证
