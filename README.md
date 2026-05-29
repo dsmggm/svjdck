@@ -214,6 +214,8 @@ docker logs -f --tail 200 jdck
 - 去除图像验证码验证
 ## v20260527
 - 修复已知bug
+## v20260529
+- 修复已知bug
 </pre>
 
 
